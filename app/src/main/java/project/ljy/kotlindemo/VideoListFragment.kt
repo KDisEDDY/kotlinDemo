@@ -57,7 +57,8 @@ class VideoListFragment : Fragment() {
 
             override fun onResponse(call: Call<VideoList>?, response: Response<VideoList>) {
                 val videoList = response.body()
-                    mListAdapter.addList(videoList?.itemList!!)
+                mListAdapter.addList(videoList?.itemList!!)
+                mListAdapter.notifyDataSetChanged()
             }
         })
     }
