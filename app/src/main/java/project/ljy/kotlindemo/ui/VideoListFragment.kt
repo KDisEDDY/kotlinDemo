@@ -1,4 +1,4 @@
-package project.ljy.kotlindemo
+package project.ljy.kotlindemo.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import project.ljy.kotlindemo.R
+import project.ljy.kotlindemo.data.VideoList
+import project.ljy.kotlindemo.adapter.VideoListAdapter
 import project.ljy.kotlindemo.network.RetrofitManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,11 +28,11 @@ import retrofit2.Response
 class VideoListFragment : Fragment() {
 
     lateinit var mRecyclerList : RecyclerView
-    lateinit var mListAdapter:VideoListAdapter
+    lateinit var mListAdapter: VideoListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mListAdapter = VideoListAdapter(context , mutableListOf())
+        mListAdapter = VideoListAdapter(context, mutableListOf())
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

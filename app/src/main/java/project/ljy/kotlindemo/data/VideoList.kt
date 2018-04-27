@@ -1,4 +1,4 @@
-package project.ljy.kotlindemo
+package project.ljy.kotlindemo.data
 
 import java.io.Serializable
 

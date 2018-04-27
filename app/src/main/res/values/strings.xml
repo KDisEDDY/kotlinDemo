@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">KotlinDemo</string>
+    <!--label 通用字段，会被共享使用
+        btn_ , txt_,tab_ 控件或具体页面名称 独有字段 最好是做单独使用
+    -->
+    <string name="label_app_name">KotlinDemo</string>
+    <string name="tab_video_list">视频列表</string>
+    <string name="tab_have_seen_list">已观看过</string>
+    <string name="tab_my_account">我的</string>
 </resources>

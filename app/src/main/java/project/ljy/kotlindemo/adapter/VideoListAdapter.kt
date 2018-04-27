@@ -1,4 +1,4 @@
-package project.ljy.kotlindemo
+package project.ljy.kotlindemo.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
+import project.ljy.kotlindemo.R
+import project.ljy.kotlindemo.base.BaseRecyclerViewAdapter
+import project.ljy.kotlindemo.data.VideoList
 
 /**
  * ClassName: VideoListAdapter

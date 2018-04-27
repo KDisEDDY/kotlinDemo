@@ -1,8 +1,9 @@
-package project.ljy.kotlindemo
+package project.ljy.kotlindemo.base
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
 
 /**
  * Title: BaseRecyclerViewAdapter
@@ -38,11 +39,13 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
      */
     override fun onBindViewHolder(holder: T, position: Int) {
         if (onItemClickListener != null) {
-            holder.itemView.setOnClickListener { v -> onItemClickListener!!.onItemClickListener(v, holder.adapterPosition) }
+            holder.itemView.setOnClickListener { v ->
+                onItemClickListener!!.onItemClick(v, holder.adapterPosition)
+            }
         }
         if (onLongItemClickListener != null) {
             holder.itemView.setOnLongClickListener { v ->
-                onLongItemClickListener!!.onLongItemClickListener(v, holder.adapterPosition)
+                onLongItemClickListener!!.onLongItemClick(v, holder.adapterPosition)
                 false
             }
         }

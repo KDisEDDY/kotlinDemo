@@ -1,4 +1,4 @@
-package project.ljy.kotlindemo
+package project.ljy.kotlindemo.base
 
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco

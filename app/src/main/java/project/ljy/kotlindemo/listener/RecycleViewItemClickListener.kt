@@ -1,4 +1,4 @@
-package project.ljy.kotlindemo
+package project.ljy.kotlindemo.listener
 
 import android.view.View
 
@@ -13,10 +13,10 @@ import android.view.View
  */
 interface RecycleViewItemClickListener {
     interface ItemClickListener {
-        fun onItemClickListener(v: View, position: Int)
+        fun onItemClick(v: View, position: Int)
     }
 
     interface LongItemClickListener {
-        fun onLongItemClickListener(v: View, position: Int)
+        fun onLongItemClick(v: View, position: Int)
     }
 }

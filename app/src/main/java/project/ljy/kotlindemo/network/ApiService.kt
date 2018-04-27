@@ -1,8 +1,6 @@
 package project.ljy.kotlindemo.network
 
-import okhttp3.ResponseBody
-import project.ljy.kotlindemo.VideoList
-import retrofit2.Call
+import project.ljy.kotlindemo.data.VideoList
 import retrofit2.http.GET
 
 /**

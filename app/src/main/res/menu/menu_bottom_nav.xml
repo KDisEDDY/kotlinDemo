@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_record_list"
+        android:icon="@drawable/ic_tab_video_list"
+        android:title="@string/tab_video_list" />
+    <item
+        android:id="@+id/item_calendar"
+        android:icon="@drawable/ic_tab_have_seen"
+        android:title="@string/tab_have_seen_list" />
+    <item
+        android:id="@+id/item_finish_record"
+        android:icon="@drawable/ic_tab_my_account"
+        android:title="@string/tab_my_account" />
+</menu>

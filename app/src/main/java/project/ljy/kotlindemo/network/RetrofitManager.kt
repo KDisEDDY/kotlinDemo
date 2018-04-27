@@ -6,6 +6,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import project.ljy.kotlindemo.utils.SystemUtil
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -36,8 +37,8 @@ object RetrofitManager{
             val request: Request
             val modifiedUrl = originalRequest.url().newBuilder()
                     // Provide your custom parameter here
-                    .addQueryParameter("phoneSystem", "")
-                    .addQueryParameter("phoneModel", "")
+                    .addQueryParameter("phoneSystem", SystemUtil.systemVersion)
+                    .addQueryParameter("phoneModel", SystemUtil.systemModel)
                     .build()
             request = originalRequest.newBuilder().url(modifiedUrl).build()
             chain.proceed(request)
