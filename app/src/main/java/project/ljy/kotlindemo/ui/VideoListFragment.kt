@@ -48,10 +48,6 @@ class VideoListFragment : Fragment() {
         getVideoList()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     private fun getVideoList(){
         RetrofitManager.service.getDailyVideoList().enqueue(object: Callback<VideoList> {
             override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
@@ -60,7 +56,10 @@ class VideoListFragment : Fragment() {
 
             override fun onResponse(call: Call<VideoList>?, response: Response<VideoList>) {
                 val videoList = response.body()
-                mListAdapter.addList(videoList?.itemList!!)
+                //过滤掉没有数据的item
+                val filterList = videoList?.itemList!!.filter { item: VideoList.ItemList
+                    -> item.data?.dataType.equals("VideoBeanForClient") }
+                mListAdapter.addList(filterList)
                 mListAdapter.notifyDataSetChanged()
             }
         })
