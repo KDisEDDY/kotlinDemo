@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
 import project.ljy.kotlindemo.adapter.VideoListAdapter
+import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
+import project.ljy.kotlindemo.listener.RecycleViewItemClickListener.ItemClickListener
 import project.ljy.kotlindemo.network.RetrofitManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,10 +48,16 @@ class VideoListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         getVideoList()
+
+        mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
+            override fun onItemClick(v: View, position: Int) {
+                var item : VideoList.ItemList = mListAdapter.getItem(position)!!
+            }
+        })
     }
 
     private fun getVideoList(){
-        RetrofitManager.service.getDailyVideoList().enqueue(object: Callback<VideoList> {
+        RetrofitManager.mService.getDailyVideoList().enqueue(object: Callback<VideoList> {
             override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
                 Log.i("NetWorkResponse" ,t.toString())
             }

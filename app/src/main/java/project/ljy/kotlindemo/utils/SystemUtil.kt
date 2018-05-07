@@ -10,10 +10,6 @@ package project.ljy.kotlindemo.utils
  * Version: 1.0
  */
 
-import android.app.Activity
-import android.content.Context
-import android.telephony.TelephonyManager
-
 import java.util.Locale
 
 /**

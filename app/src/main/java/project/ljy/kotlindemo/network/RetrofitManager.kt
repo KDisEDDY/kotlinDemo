@@ -1,7 +1,5 @@
 package project.ljy.kotlindemo.network
 
-import android.preference.Preference
-import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -10,7 +8,6 @@ import project.ljy.kotlindemo.utils.SystemUtil
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import kotlin.reflect.KProperty
 
 /**
  * Title: RetrofitManager
@@ -23,10 +20,10 @@ import kotlin.reflect.KProperty
  */
 object RetrofitManager{
 
-    private var client: OkHttpClient? = null
-    private var retrofit: Retrofit? = null
+    private var mClient: OkHttpClient? = null
+    private var mRetrofit: Retrofit? = null
 
-    val service: ApiService by lazy { getRetrofit()!!.create(ApiService::class.java)}
+    val mService: ApiService by lazy { getRetrofit()!!.create(ApiService::class.java)}
 
     /**
      * 设置公共参数
@@ -60,15 +57,15 @@ object RetrofitManager{
     }
 
     private fun getRetrofit(): Retrofit? {
-        if (retrofit == null) {
+        if (mRetrofit == null) {
             synchronized(RetrofitManager::class.java) {
-                if (retrofit == null) {
+                if (mRetrofit == null) {
                     //添加一个log拦截器,打印所有的log
                     val httpLoggingInterceptor = HttpLoggingInterceptor()
                     //可以设置请求过滤的水平,body,basic,headers
                     httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-                    client = OkHttpClient.Builder()
+                    mClient = OkHttpClient.Builder()
                             .addInterceptor(addQueryParameterInterceptor())  //参数添加
                             .addInterceptor(addHeaderInterceptor()) // token过滤
                             .addInterceptor(httpLoggingInterceptor) //日志,所有的请求响应度看到
@@ -78,15 +75,15 @@ object RetrofitManager{
                             .build()
 
                     // 获取retrofit的实例
-                    retrofit = Retrofit.Builder()
+                    mRetrofit = Retrofit.Builder()
                             .baseUrl(UrlConstant.BASE_URL)  //自己配置
-                            .client(client!!)
+                            .client(mClient!!)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build()
                 }
             }
         }
-        return retrofit
+        return mRetrofit
     }
 
 
