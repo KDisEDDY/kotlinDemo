@@ -4,7 +4,9 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import project.ljy.kotlindemo.R
+import project.ljy.kotlindemo.adapter.PhotoCheckAdapter
 
 /**
  * ClassName: ShowPhotoDialog
@@ -12,23 +14,36 @@ import project.ljy.kotlindemo.R
  * Created by EDDY
  * CreateTime:2018/5/7
  */
-class ShowPhotoDialog(context: Context?) : Dialog(context) {
+class ShowPhotoDialog(context: Context) : Dialog(context) {
 
-    inner class Builder(context: Context?) {
+    var mPhotoList: MutableList<String>
 
-        var dialog:ShowPhotoDialog? = null
+    private var mShowPhotoRecycleView : PhotoCheckRecyclerView
+    private var mAdapter : PhotoCheckAdapter
+    private var mCloseImg : ImageView
 
-        var photoList: List<String>? = null
 
-        init {
-            dialog = ShowPhotoDialog(context)
-            val view : View = LayoutInflater.from(context).inflate(R.layout.dialog_show_photo , null)
-            dialog!!.setContentView(view)
-        }
+    init {
+        val view : View = LayoutInflater.from(context).inflate(R.layout.dialog_show_photo , null)
+        mShowPhotoRecycleView = view.findViewById(R.id.view_photo_check)
+        mCloseImg = view.findViewById(R.id.iv_close)
+        setContentView(view)
 
-        fun build(){
-            
-        }
+        setCancelable(false)
+        setCanceledOnTouchOutside(false)
+        mPhotoList = mutableListOf()
+        mAdapter = PhotoCheckAdapter(context,mPhotoList)
+        buttonOperation()
+    }
+
+    private fun buttonOperation(){
+        mCloseImg.setOnClickListener({
+            if(isShowing){
+                dismiss()
+            }
+        })
+
+        
 
     }
 }

@@ -12,7 +12,6 @@ import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
 import project.ljy.kotlindemo.adapter.VideoListAdapter
 import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
-import project.ljy.kotlindemo.listener.RecycleViewItemClickListener.ItemClickListener
 import project.ljy.kotlindemo.network.RetrofitManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,6 +51,9 @@ class VideoListFragment : Fragment() {
         mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
             override fun onItemClick(v: View, position: Int) {
                 var item : VideoList.ItemList = mListAdapter.getItem(position)!!
+                var dialog : ShowPhotoDialog = ShowPhotoDialog(context).apply {
+
+                }
             }
         })
     }
