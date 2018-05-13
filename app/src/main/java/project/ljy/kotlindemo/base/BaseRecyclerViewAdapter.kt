@@ -28,9 +28,7 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
         this.mList = list
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): T? {
-        return null
-    }
+    abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): T?
 
     /**
      * 需要使用点击事件时，重写onBindViewHolder时要调用父类方法，封装了监听在该方法

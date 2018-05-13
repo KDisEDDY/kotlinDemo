@@ -2,8 +2,10 @@ package project.ljy.kotlindemo.ui
 
 import android.app.Dialog
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.adapter.PhotoCheckAdapter
@@ -14,7 +16,7 @@ import project.ljy.kotlindemo.adapter.PhotoCheckAdapter
  * Created by EDDY
  * CreateTime:2018/5/7
  */
-class ShowPhotoDialog(context: Context) : Dialog(context) {
+class ShowPhotoDialog(context: Context) : Dialog(context , R.style.commonDialog) {
 
     var mPhotoList: MutableList<String>
 
@@ -28,12 +30,22 @@ class ShowPhotoDialog(context: Context) : Dialog(context) {
         mShowPhotoRecycleView = view.findViewById(R.id.view_photo_check)
         mCloseImg = view.findViewById(R.id.iv_close)
         setContentView(view)
-
+        window.decorView.setPadding(0,0,0,0)
+        window.attributes.width = WindowManager.LayoutParams.MATCH_PARENT
+        window.attributes.height = WindowManager.LayoutParams.WRAP_CONTENT
         setCancelable(false)
         setCanceledOnTouchOutside(false)
         mPhotoList = mutableListOf()
         mAdapter = PhotoCheckAdapter(context,mPhotoList)
+        mShowPhotoRecycleView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        mShowPhotoRecycleView.adapter = mAdapter
         buttonOperation()
+    }
+
+    fun build() : ShowPhotoDialog{
+        mAdapter.addList(mPhotoList)
+        mAdapter.notifyDataSetChanged()
+        return this
     }
 
     private fun buttonOperation(){

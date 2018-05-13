@@ -50,10 +50,11 @@ class VideoListFragment : Fragment() {
 
         mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
             override fun onItemClick(v: View, position: Int) {
-                var item : VideoList.ItemList = mListAdapter.getItem(position)!!
-                var dialog : ShowPhotoDialog = ShowPhotoDialog(context).apply {
-
-                }
+                val itemPhoto  = mListAdapter.getItem(position)!!.data!!.cover
+                val dialog : ShowPhotoDialog = ShowPhotoDialog(context).apply {
+                    mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
+                }.build()
+                dialog.show()
             }
         })
     }
