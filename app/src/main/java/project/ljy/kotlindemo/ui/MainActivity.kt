@@ -14,7 +14,7 @@ class MainActivity : BaseActivity() {
     override fun initOnCreateOperation(savedInstanceState: Bundle?) {
         initTitle(getString(R.string.tab_video_list) , BaseConstant.STYLE_MAIN_PAGE)
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.ll_frag_container, VideoListFragment())
+        transaction.add(R.id.ll_frag_container, ViewPagerFragment())
         transaction.commitAllowingStateLoss()
     }
 }

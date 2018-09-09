@@ -235,9 +235,9 @@ class VideoList : Serializable {
             }
 
             class Cover {
-                var feed: String? = null
-                var detail: String? = null
-                var blurred: String? = null
+                var feed: String = ""
+                var detail: String = ""
+                var blurred: String = ""
                 var sharing: Any? = null
                 var homepage: String? = null
             }

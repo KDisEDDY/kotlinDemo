@@ -1,13 +1,15 @@
 package project.ljy.kotlindemo.ui
 
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_video_list.*
+import kotlinx.android.synthetic.main.fragment_viewpager.*
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
 import project.ljy.kotlindemo.adapter.VideoListAdapter
@@ -28,7 +30,6 @@ import retrofit2.Response
  */
 class VideoListFragment : Fragment() {
 
-    lateinit var mRecyclerList : RecyclerView
     lateinit var mListAdapter: VideoListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +38,15 @@ class VideoListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = LayoutInflater.from(activity).inflate(R.layout.fragment_video_list, container , false)
-        mRecyclerList = view.findViewById(R.id.v_recycler)
-        mRecyclerList.layoutManager = LinearLayoutManager(activity)
-        mRecyclerList.adapter = mListAdapter
-        return view
+        return LayoutInflater.from(activity).inflate(R.layout.fragment_video_list, container , false)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        v_recycler.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = mListAdapter
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -50,9 +55,15 @@ class VideoListFragment : Fragment() {
 
         mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
             override fun onItemClick(v: View, position: Int) {
-                val itemPhoto  = mListAdapter.getItem(position)!!.data!!.cover
+                val itemPhoto  = mListAdapter.getItem(position).data!!.cover
                 val dialog : ShowPhotoDialog = ShowPhotoDialog(context).apply {
-                    mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
+                    itemPhoto?.let {
+                        mPhotoList = ArrayList<String>().apply{
+                            add(it.feed)
+                            add(it.detail)
+                            add(it.blurred)
+                        }
+                    }
                 }.build()
                 dialog.show()
             }
@@ -71,7 +82,6 @@ class VideoListFragment : Fragment() {
                 val filterList = videoList?.itemList!!.filter { item: VideoList.ItemList
                     -> item.data?.dataType.equals("VideoBeanForClient") }
                 mListAdapter.addList(filterList)
-                mListAdapter.notifyDataSetChanged()
             }
         })
     }

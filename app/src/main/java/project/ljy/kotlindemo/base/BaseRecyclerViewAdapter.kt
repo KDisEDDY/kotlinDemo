@@ -16,7 +16,7 @@ import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
  */
 abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: Context, list: MutableList<S>) : RecyclerView.Adapter<T>() {
 
-    var mList: MutableList<S>? = null
+    var mList: MutableList<S> = mutableListOf()
     var mContext: Context? = null
 
     private var onItemClickListener: RecycleViewItemClickListener.ItemClickListener? = null
@@ -50,7 +50,7 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
     }
 
     override fun getItemCount(): Int {
-        return mList!!.size
+        return mList.size
     }
 
     fun setOnItemClickListener(onItemClickListener: RecycleViewItemClickListener.ItemClickListener) {
@@ -61,30 +61,21 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
         this.onLongItemClickListener = onLongItemClickListener
     }
 
-    fun getItem(position: Int): S? {
-        if (position < 0 && position > mList!!.size - 1) {
-            try {
-                throw Exception("the positiion is wrong")
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-        } else {
-            return mList!![position]
-        }
-        return null
+    fun getItem(position: Int): S {
+        return mList[position]
     }
 
     fun addList(newList: List<S>) {
         if (newList.isNotEmpty()) {
-            mList!!.addAll(newList)
+            mList.addAll(newList)
         }
+        notifyDataSetChanged()
     }
 
     fun requestList(firstList: List<S>) {
         if (firstList.isNotEmpty()) {
-            mList!!.clear()
-            mList!!.addAll(firstList)
+            mList.clear()
+            mList.addAll(firstList)
         }
     }
 }
