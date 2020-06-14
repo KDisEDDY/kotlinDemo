@@ -1,8 +1,8 @@
 package project.ljy.kotlindemo.base
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
 
 /**
@@ -27,8 +27,6 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
         this.mContext = context
         this.mList = list
     }
-
-    abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): T?
 
     /**
      * 需要使用点击事件时，重写onBindViewHolder时要调用父类方法，封装了监听在该方法

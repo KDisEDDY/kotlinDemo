@@ -1,13 +1,14 @@
 package project.ljy.kotlindemo.ui
 
+import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
 import project.ljy.kotlindemo.adapter.VideoListAdapter
@@ -31,12 +32,18 @@ class VideoListFragment : Fragment() {
     lateinit var mRecyclerList : RecyclerView
     lateinit var mListAdapter: VideoListAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mListAdapter = VideoListAdapter(context, mutableListOf())
+    companion object {
+        const val TAG = "VideoListFragment"
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        context?.let {
+            mListAdapter = VideoListAdapter(it, mutableListOf())
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = LayoutInflater.from(activity).inflate(R.layout.fragment_video_list, container , false)
         mRecyclerList = view.findViewById(R.id.v_recycler)
         mRecyclerList.layoutManager = LinearLayoutManager(activity)
@@ -51,10 +58,12 @@ class VideoListFragment : Fragment() {
         mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
             override fun onItemClick(v: View, position: Int) {
                 val itemPhoto  = mListAdapter.getItem(position)!!.data!!.cover
-                val dialog : ShowPhotoDialog = ShowPhotoDialog(context).apply {
-                    mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
-                }.build()
-                dialog.show()
+                context?.let {
+                    val dialog : ShowPhotoDialog = ShowPhotoDialog(it).apply {
+                        mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
+                    }.build()
+                    dialog.show()
+                }
             }
         })
     }
@@ -62,7 +71,7 @@ class VideoListFragment : Fragment() {
     private fun getVideoList(){
         RetrofitManager.mService.getDailyVideoList().enqueue(object: Callback<VideoList> {
             override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
-                Log.i("NetWorkResponse" ,t.toString())
+                Log.i(TAG, "get VideoList fail ${t?.message}")
             }
 
             override fun onResponse(call: Call<VideoList>?, response: Response<VideoList>) {
@@ -72,6 +81,7 @@ class VideoListFragment : Fragment() {
                     -> item.data?.dataType.equals("VideoBeanForClient") }
                 mListAdapter.addList(filterList)
                 mListAdapter.notifyDataSetChanged()
+                Log.i(TAG, "get VideoList success $filterList")
             }
         })
     }

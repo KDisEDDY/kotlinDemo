@@ -32,7 +32,7 @@ object RetrofitManager{
         return Interceptor { chain ->
             val originalRequest = chain.request()
             val request: Request
-            val modifiedUrl = originalRequest.url().newBuilder()
+            val modifiedUrl = originalRequest.url.newBuilder()
                     // Provide your custom parameter here
                     .addQueryParameter("phoneSystem", SystemUtil.systemVersion)
                     .addQueryParameter("phoneModel", SystemUtil.systemModel)
@@ -50,7 +50,7 @@ object RetrofitManager{
             val originalRequest = chain.request()
             val requestBuilder = originalRequest.newBuilder()
                     // Provide your custom header here
-                    .method(originalRequest.method(), originalRequest.body())
+                    .method(originalRequest.method, originalRequest.body)
             val request = requestBuilder.build()
             chain.proceed(request)
         }
