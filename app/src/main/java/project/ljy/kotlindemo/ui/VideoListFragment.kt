@@ -9,14 +9,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import project.ljy.kotlindemo.MyApplication
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
 import project.ljy.kotlindemo.adapter.VideoListAdapter
+import project.ljy.kotlindemo.dataSource.VideoListDataSource
 import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
-import project.ljy.kotlindemo.network.RetrofitManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * Title: VideoListFragment
@@ -31,9 +33,15 @@ class VideoListFragment : Fragment() {
 
     lateinit var mRecyclerList : RecyclerView
     lateinit var mListAdapter: VideoListAdapter
+    @Inject lateinit var mDataSource: VideoListDataSource
 
     companion object {
         const val TAG = "VideoListFragment"
+    }
+
+    override fun onAttach(context: Context) {
+        (this.activity?.applicationContext as? MyApplication)?.appComponent?.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +77,7 @@ class VideoListFragment : Fragment() {
     }
 
     private fun getVideoList(){
-        RetrofitManager.mService.getDailyVideoList().enqueue(object: Callback<VideoList> {
+        mDataSource.getVideoList(object: Callback<VideoList> {
             override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
                 Log.i(TAG, "get VideoList fail ${t?.message}")
             }

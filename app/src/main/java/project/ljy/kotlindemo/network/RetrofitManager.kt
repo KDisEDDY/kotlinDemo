@@ -1,5 +1,7 @@
 package project.ljy.kotlindemo.network
 
+import dagger.Module
+import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -8,9 +10,10 @@ import project.ljy.kotlindemo.utils.SystemUtil
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 /**
- * Title: RetrofitManager
+ * Title: RetrofitManagerØ
  * Description:
  * Copyright: Copyright (c) 2014-2016 gjfax.com
  * Company: 广金所
@@ -18,13 +21,17 @@ import java.util.concurrent.TimeUnit
  * Date: 2018/4/26
  * Version: 1.0
  */
-object RetrofitManager{
+@Module
+class RetrofitManager{
 
-    private var mClient: OkHttpClient? = null
-    private var mRetrofit: Retrofit? = null
+    var mClient: OkHttpClient? = null
+    var mRetrofit: Retrofit? = null
 
-    val mService: ApiService by lazy { getRetrofit()!!.create(ApiService::class.java)}
-
+    @Singleton
+    @Provides
+    public fun getService() : ApiService {
+        return getRetrofit()!!.create(ApiService::class.java)
+    }
     /**
      * 设置公共参数
      */
