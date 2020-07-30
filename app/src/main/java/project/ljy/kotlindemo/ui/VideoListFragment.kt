@@ -77,7 +77,7 @@ class VideoListFragment : Fragment() {
     }
 
     private fun getVideoList(){
-        mDataSource.getVideoList(object: Callback<VideoList> {
+        mDataSource.getVideoListInFile(object: Callback<VideoList> {
             override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
                 Log.i(TAG, "get VideoList fail ${t?.message}")
             }
