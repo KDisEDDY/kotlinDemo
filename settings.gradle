@@ -1,1 +1,1 @@
-include ':app', ':scrollconflict'
+include ':app'
