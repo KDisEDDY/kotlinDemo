@@ -1,4 +1,4 @@
-package project.ljy.kotlindemo.utils
+package com.eddyjyliu.baseutil.utils
 
 /**
  * Title: SystemUtil

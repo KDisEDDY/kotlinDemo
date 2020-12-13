@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.widget.TextView
+import com.eddyjyliu.baseutil.utils.StatusBarUtil
 import project.ljy.kotlindemo.R
-import project.ljy.kotlindemo.utils.StatusBarUtil
 
 /**
  * Title: BaseActivity

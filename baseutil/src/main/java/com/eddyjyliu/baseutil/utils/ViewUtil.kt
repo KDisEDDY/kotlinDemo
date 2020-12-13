@@ -7,7 +7,7 @@
  * Date 2013-10-11 下午2:24:40
  * Version 1.0
  */
-package project.ljy.kotlindemo.utils
+package com.eddyjyliu.baseutil.utils
 
 import android.app.Activity
 import android.content.Context
