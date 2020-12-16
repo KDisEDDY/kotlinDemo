@@ -1,2 +1,5 @@
 include ':app'
 include ':baseutil'
+include ':modulea'
+include ':moduleb'
+include ':easyrouter'
