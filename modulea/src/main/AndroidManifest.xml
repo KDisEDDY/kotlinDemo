@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.eddyjyliu.modulea">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <application>
-        <activity android:name=".ui.ModuleATestActivity"></activity>
+    <application
+        android:supportsRtl="true"
+        android:label="@string/appName"
+        android:theme="@style/appComTheme"
+        android:icon="@mipmap/ic_launcher">
+        <activity android:name=".ui.ModuleATestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
