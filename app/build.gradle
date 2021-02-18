@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
-
+def isModuleA = rootProject.ext.transModuleAComponent
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -59,4 +59,5 @@ dependencies {
 
     //用到的开放api需要引入这个库
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
+    if(isModuleA) implementation project(':modulea')
 }
