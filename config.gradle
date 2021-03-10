@@ -1,5 +1,5 @@
 
 ext {
-    transModuleAComponent = true
+    transModuleAComponent = false
     transModuleBComponent = true
 }
