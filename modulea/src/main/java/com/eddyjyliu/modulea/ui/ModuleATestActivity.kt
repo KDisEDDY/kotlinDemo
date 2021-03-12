@@ -9,12 +9,22 @@ import kotlinx.coroutines.launch
 
 class ModuleATestActivity : AppCompatActivity() {
 
+    companion object {
+        private const val TAG = "ModuleATestActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_module_a_test)
+        val calculateFunction = CalculateFunction()
+//        GlobalScope.launch {
+//            val number = calculateFunction.calculateLogic(10.toDouble())
+//            Log.d("ModuleATestActivity" , "the number is $number")
+//        }
+
         GlobalScope.launch {
-            val number = CalculateFunction().calculateLogic(10.toDouble())
-            Log.d("ModuleATestActivity" , "the number is $number")
+            val number = calculateFunction.calculateLogicWithScopeAsync(10.toDouble(), 20.toDouble())
+            Log.d(TAG , "calculateLogicWithScopeAsync the number is $number")
         }
     }
 }
