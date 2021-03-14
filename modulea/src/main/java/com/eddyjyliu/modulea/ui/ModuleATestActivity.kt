@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.eddyjyliu.modulea.R
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ModuleATestActivity : AppCompatActivity() {
@@ -22,9 +24,11 @@ class ModuleATestActivity : AppCompatActivity() {
 //            Log.d("ModuleATestActivity" , "the number is $number")
 //        }
 
-        GlobalScope.launch {
+        val job = GlobalScope.launch {
             val number = calculateFunction.calculateLogicWithScopeAsync(10.toDouble(), 20.toDouble())
             Log.d(TAG , "calculateLogicWithScopeAsync the number is $number")
+            delay(10000)
         }
+        job.cancel(CancellationException("test the cancel"))
     }
 }
