@@ -44,7 +44,7 @@ class VideoListDataSource @Inject constructor(private var apiService: ApiService
                     response.body()!!.source().use { responseBody ->
                         while (!responseBody.exhausted()) {
                             val responseBodyLine = responseBody.readUtf8Line()
-                            Log.d(TAG, responseBodyLine)
+                            Log.d(TAG, responseBodyLine!!)
                         }
                     }
 //                    } catch (e: EOFException) {

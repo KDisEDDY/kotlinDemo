@@ -6,18 +6,22 @@ import android.util.Log
 import android.widget.GridLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.easyrouter.annotation.Bind
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.adapter.GridAdapter
 
 
 class GridLayoutActivity : Activity() {
 
+    @Bind(R.id.grid_layout)
+    private lateinit var gridLayout: GridLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grid_layout)
 
         var startTimeMill = System.currentTimeMillis()
-        val gridLayout = findViewById<GridLayout>(R.id.grid_layout)
+        gridLayout = findViewById<GridLayout>(R.id.grid_layout)
         Log.d("GridLayoutActivity", "inflate gridLayout cost:${System.currentTimeMillis() - startTimeMill}")
         //测试recyclerView的绘制耗时
         val dataList = arrayListOf("1", "2", "3", "4", "5", "6")

@@ -30,9 +30,11 @@ class ShowPhotoDialog(context: Context) : Dialog(context , R.style.commonDialog)
         mShowPhotoRecycleView = view.findViewById(R.id.view_photo_check)
         mCloseImg = view.findViewById(R.id.iv_close)
         setContentView(view)
-        window.decorView.setPadding(0,0,0,0)
-        window.attributes.width = WindowManager.LayoutParams.MATCH_PARENT
-        window.attributes.height = WindowManager.LayoutParams.WRAP_CONTENT
+        window?.run {
+            decorView.setPadding(0,0,0,0)
+            attributes.width = WindowManager.LayoutParams.MATCH_PARENT
+            attributes.height = WindowManager.LayoutParams.WRAP_CONTENT
+        }
         setCancelable(false)
         setCanceledOnTouchOutside(false)
         mPhotoList = mutableListOf()
@@ -49,13 +51,12 @@ class ShowPhotoDialog(context: Context) : Dialog(context , R.style.commonDialog)
     }
 
     private fun buttonOperation(){
-        mCloseImg.setOnClickListener({
-            if(isShowing){
+        mCloseImg.setOnClickListener {
+            if (isShowing) {
                 dismiss()
             }
-        })
+        }
 
-        
 
     }
 }
