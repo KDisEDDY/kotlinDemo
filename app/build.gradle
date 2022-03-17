@@ -23,6 +23,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        ndk {
+            abiFilter "armeabi"
+            abiFilter "armeabi-v7a"
+            abiFilter "arm64-v8a"
+            abiFilter "x86_64"
+            abiFilter "x86"
+        }
     }
     buildTypes {
         release {
@@ -47,7 +54,8 @@ dependencies {
     implementation project(':baseutil')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.71"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.facebook.fresco:fresco:1.8.1'
+    implementation 'com.facebook.fresco:fresco:2.6.0'
+    implementation 'com.facebook.fresco:imagepipeline-okhttp3:2.6.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
@@ -60,15 +68,18 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta8'
     implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
     implementation "io.reactivex.rxjava2:rxjava:2.1.9"
+    implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
     implementation deps.dagger.api
     kapt deps.dagger.compiler
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 
     //用到的开放api需要引入这个库
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
     if(isModuleA) implementation project(':modulea')
 
     implementation project(':annotationProcessor')
+//    implementation project(':flutter')
 
     // 引入arouter
     implementation deps.arouter.api

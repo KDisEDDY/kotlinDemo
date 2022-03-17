@@ -78,11 +78,4 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
             mList!!.addAll(newList)
         }
     }
-
-    fun requestList(firstList: List<S>) {
-        if (firstList.isNotEmpty()) {
-            mList!!.clear()
-            mList!!.addAll(firstList)
-        }
-    }
 }

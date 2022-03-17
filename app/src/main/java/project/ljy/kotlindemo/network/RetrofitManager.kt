@@ -29,7 +29,6 @@ import javax.inject.Singleton
 @Module
 class RetrofitManager{
 
-    var mClient: OkHttpClient? = null
     var mRetrofit: Retrofit? = null
 
     @Singleton
@@ -37,37 +36,7 @@ class RetrofitManager{
     public fun getService() : ApiService {
         return getRetrofit()!!.create(ApiService::class.java)
     }
-    /**
-     * 设置公共参数
-     */
-    private fun addQueryParameterInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val originalRequest = chain.request()
-            val request: Request
-            val modifiedUrl = originalRequest.url.newBuilder()
-                    .build()
-            request = originalRequest.newBuilder().url(modifiedUrl).build()
-            chain.proceed(request)
-        }
-    }
 
-    /**
-     * 设置头
-     */
-    private fun addHeaderInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val originalRequest = chain.request()
-            val requestBuilder = originalRequest.newBuilder()
-                    // Provide your custom header here
-                    .addHeader("Accept", "*/*")
-                    .addHeader("Content-Type", "application/json;charset=UTF-8")
-                    .addHeader("Connection", "keep-alive")
-                    .addHeader("Accept-Language", "zh-CN,zh")
-                    .method(originalRequest.method, originalRequest.body)
-            val request = requestBuilder.build()
-            chain.proceed(request)
-        }
-    }
 
     private fun getRetrofit(): Retrofit? {
         if (mRetrofit == null) {
@@ -78,20 +47,10 @@ class RetrofitManager{
                     //可以设置请求过滤的水平,body,basic,headers
                     httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
 
-                    mClient = OkHttpClient.Builder()
-//                            .addInterceptor(ChunksInterceptor())
-                            .addInterceptor(addQueryParameterInterceptor())  //参数添加
-                            .addInterceptor(addHeaderInterceptor()) // token过滤
-                            .addInterceptor(httpLoggingInterceptor) //日志,所有的请求响应度看到
-                            .connectTimeout(60L, TimeUnit.SECONDS)
-                            .readTimeout(60L, TimeUnit.SECONDS)
-                            .writeTimeout(60L, TimeUnit.SECONDS)
-                            .build()
-
                     // 获取retrofit的实例
                     mRetrofit = Retrofit.Builder()
                             .baseUrl(UrlConstant.BASE_URL)  //自己配置
-                            .client(mClient!!)
+                            .client(ClientManager.instance)
                             .callbackExecutor(Executors.newSingleThreadExecutor())
                             .addConverterFactory(GsonConverterFactory.create())
                             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

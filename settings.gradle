@@ -5,3 +5,8 @@ include ':moduleb'
 include ':easyrouter'
 include ':videoedit'
 include ':annotationProcessor'
+//setBinding(new Binding([gradle: this]))
+//evaluate(new File(                                                     // new
+//        settingsDir.parentFile,                                              // new
+//        'flutter_picker/.android/include_flutter.groovy'                         // new
+//))                                                                     // new

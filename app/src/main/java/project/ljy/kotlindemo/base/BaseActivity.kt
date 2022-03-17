@@ -18,7 +18,7 @@ import project.ljy.kotlindemo.R
  */
 abstract class BaseActivity :AppCompatActivity() {
 
-    private lateinit var mToolbar: Toolbar
+    private var mToolbar: Toolbar? = null
 
     abstract fun setSubContentView(): Int
 

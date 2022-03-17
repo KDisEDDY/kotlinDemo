@@ -7,5 +7,5 @@ package project.ljy.kotlindemo.network;
  * CreateTime:2018/4/26
  */
 object UrlConstant {
-    const val BASE_URL = "http://baobab.kaiyanapp.com/api/"
+    const val BASE_URL = "https://baobab.kaiyanapp.com/api/"
 }

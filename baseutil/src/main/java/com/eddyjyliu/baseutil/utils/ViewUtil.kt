@@ -142,7 +142,7 @@ object ViewUtil {
      * @param context
      * @return
      */
-    fun getScreenDispaly(context: Context): IntArray {
+    fun getScreenDisplay(context: Context): IntArray {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         //int width = windowManager.getDefaultDisplay().getWidth();
         //int height = windowManager.getDefaultDisplay().getHeight();

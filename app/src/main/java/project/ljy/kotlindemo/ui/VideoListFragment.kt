@@ -1,6 +1,7 @@
 package project.ljy.kotlindemo.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -59,25 +60,35 @@ class VideoListFragment : Fragment() {
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         getVideoList()
 
         mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
             override fun onItemClick(v: View, position: Int) {
-                val itemPhoto  = mListAdapter.getItem(position)!!.data!!.cover
-                context?.let {
-                    val dialog : ShowPhotoDialog = ShowPhotoDialog(it).apply {
-                        mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
-                    }.build()
-                    dialog.show()
+                mListAdapter.getItem(position)?.data?.playUrl?.let {
+                    gotoVideoActivity(it)
                 }
             }
         })
     }
 
+    private fun gotoVideoActivity(playUrl: String) {
+        VideoActivity.gotoVideoActivity(requireActivity(), playUrl)
+    }
+
+    private fun gotoPhotoDialog(position: Int) {
+        val itemPhoto  = mListAdapter.getItem(position)!!.data!!.cover
+        context?.let {
+            val dialog : ShowPhotoDialog = ShowPhotoDialog(it).apply {
+                mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
+            }.build()
+            dialog.show()
+        }
+    }
+
     private fun getVideoList(){
-        mDataSource.getVideoListInFile(object: Callback<VideoList> {
+        mDataSource.getVideoList(object: Callback<VideoList> {
             override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
                 Log.i(TAG, "get VideoList fail ${t?.message}")
             }
@@ -87,9 +98,11 @@ class VideoListFragment : Fragment() {
                 //过滤掉没有数据的item
                 val filterList = videoList?.itemList!!.filter { item: VideoList.ItemList
                     -> item.data?.dataType.equals("VideoBeanForClient") }
-                mListAdapter.addList(filterList)
-                mListAdapter.notifyDataSetChanged()
-                Log.i(TAG, "get VideoList success $filterList")
+                this@VideoListFragment.mRecyclerList.post {
+                    mListAdapter.addList(filterList)
+                    mListAdapter.notifyDataSetChanged()
+                    Log.i(TAG, "get VideoList success $filterList")
+                }
             }
         })
     }

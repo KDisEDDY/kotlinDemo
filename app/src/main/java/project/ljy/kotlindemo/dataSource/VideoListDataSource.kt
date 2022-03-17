@@ -2,6 +2,8 @@ package project.ljy.kotlindemo.dataSource
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
 import okio.Buffer
 import project.ljy.kotlindemo.data.VideoList
@@ -30,30 +32,30 @@ class VideoListDataSource @Inject constructor(private var apiService: ApiService
         apiService.getDailyVideoList().enqueue(callback)
     }
 
-    @SuppressLint("CheckResult")
-    fun getVideoListInFile(callback: Callback<VideoList>?) {
-        val dataSourceCallback = object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d(TAG, "getVideoListInFile fail ${t.printStackTrace()} ")
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if(response.isSuccessful) {
-                    Log.d(TAG, "getVideoListInFile success. Downloading the file ${response.body()?.source()}")
-//                    try {
-                    response.body()!!.source().use { responseBody ->
-                        while (!responseBody.exhausted()) {
-                            val responseBodyLine = responseBody.readUtf8Line()
-                            Log.d(TAG, responseBodyLine!!)
-                        }
-                    }
-//                    } catch (e: EOFException) {
-//                        Log.d(TAG, "catch the EOFException")
+//    @SuppressLint("CheckResult")
+//    fun getVideoListInFile(callback: Callback<VideoList>?) {
+//        val dataSourceCallback = object : Callback<ResponseBody> {
+//            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                Log.d(TAG, "getVideoListInFile fail ${t.printStackTrace()} ")
+//            }
+//
+//            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+//                if(response.isSuccessful) {
+//                    Log.d(TAG, "getVideoListInFile success. Downloading the file ${response.body()?.source()}")
+////                    try {
+//                    response.body()!!.source().use { responseBody ->
+//                        while (!responseBody.exhausted()) {
+//                            val responseBodyLine = responseBody.readUtf8Line()
+//                            Log.d(TAG, responseBodyLine!!)
+//                        }
 //                    }
-
-                }
-            }
-        }
-        apiService.getDailyVideoListFile().enqueue(dataSourceCallback)
-    }
+////                    } catch (e: EOFException) {
+////                        Log.d(TAG, "catch the EOFException")
+////                    }
+//
+//                }
+//            }
+//        }
+//        apiService.getDailyVideoListFile().enqueue(dataSourceCallback)
+//    }
 }
