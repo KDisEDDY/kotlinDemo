@@ -79,7 +79,7 @@ dependencies {
     if(isModuleA) implementation project(':modulea')
 
     implementation project(':annotationProcessor')
-//    implementation project(':flutter')
+    implementation project(':flutter')
 
     // 引入arouter
     implementation deps.arouter.api

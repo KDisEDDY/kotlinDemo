@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.flutter.embedding.android.FlutterActivity
 import project.ljy.kotlindemo.MyApplication
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
@@ -32,6 +33,7 @@ import javax.inject.Inject
  */
 class VideoListFragment : Fragment() {
 
+    private val IS_OPEN_FLUTTER: Boolean = true
     lateinit var mRecyclerList : RecyclerView
     lateinit var mListAdapter: VideoListAdapter
     @Inject lateinit var mDataSource: VideoListDataSource
@@ -67,7 +69,11 @@ class VideoListFragment : Fragment() {
         mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
             override fun onItemClick(v: View, position: Int) {
                 mListAdapter.getItem(position)?.data?.playUrl?.let {
-                    gotoVideoActivity(it)
+                    if (IS_OPEN_FLUTTER) {
+                        gotoFlutterVideoActivity(it)
+                    } else {
+                        gotoVideoActivity(it)
+                    }
                 }
             }
         })
@@ -75,6 +81,14 @@ class VideoListFragment : Fragment() {
 
     private fun gotoVideoActivity(playUrl: String) {
         VideoActivity.gotoVideoActivity(requireActivity(), playUrl)
+    }
+
+    private fun gotoFlutterVideoActivity(playUrl: String) {
+        startActivity(
+            FlutterActivity.withNewEngine()
+                .build(requireActivity())
+        )
+//        startActivity(FlutterActivity.createDefaultIntent(requireActivity()))
     }
 
     private fun gotoPhotoDialog(position: Int) {
