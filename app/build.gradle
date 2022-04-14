@@ -78,7 +78,6 @@ dependencies {
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
     if(isModuleA) implementation project(':modulea')
 
-    implementation project(':annotationProcessor')
     implementation project(':flutter')
 
     // 引入arouter

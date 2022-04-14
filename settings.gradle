@@ -10,3 +10,6 @@ evaluate(new File(                                                     // new
         settingsDir.parentFile,                                              // new
         'flutter_picker/.android/include_flutter.groovy'                         // new
 ))                                                                     // new
+
+include ':flutter_picker'
+project(':flutter_picker').projectDir = new File('../flutter_picker')

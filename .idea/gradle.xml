@@ -4,17 +4,21 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/../flutter_picker" />
+            <option value="$PROJECT_DIR$/../flutter_picker/.android/Flutter" />
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/annotationProcessor" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baseutil" />
             <option value="$PROJECT_DIR$/easyrouter" />
             <option value="$PROJECT_DIR$/modulea" />
             <option value="$PROJECT_DIR$/moduleb" />
+            <option value="$PROJECT_DIR$/videoedit" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
