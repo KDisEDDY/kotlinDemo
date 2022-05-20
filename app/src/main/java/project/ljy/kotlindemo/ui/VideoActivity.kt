@@ -18,6 +18,7 @@ import project.ljy.kotlindemo.base.BaseActivity
 class VideoActivity: BaseActivity() {
 
     companion object {
+        const val TAG = "VideoActivity"
         const val KEY_VIDEO_URL = "KEY_VIDEO_URL"
 
         fun gotoVideoActivity(context: Context, url: String) {
@@ -32,6 +33,8 @@ class VideoActivity: BaseActivity() {
     var originVideoUrl = ""
     var lastPlayState = 0
     var timeStamp = 0L
+    var isFirstFrameRender = true
+    var firstRenderFrameTimeStamp = 0L
 
     override fun setSubContentView() = R.layout.activity_video
 
@@ -39,6 +42,7 @@ class VideoActivity: BaseActivity() {
         window.setBackgroundDrawableResource(android.R.drawable.screen_background_dark_transparent)
         initParam()
         initVideoView()
+        firstRenderFrameTimeStamp = SystemClock.elapsedRealtime()
     }
 
     override fun onStart() {
@@ -71,7 +75,7 @@ class VideoActivity: BaseActivity() {
             topToTop = R.id.content_layout
             rightToRight = R.id.content_layout
             bottomToBottom = R.id.content_layout
-            dimensionRatio = "h,16:9"
+//            dimensionRatio = "h,16:9"
         }
         this.findViewById<ConstraintLayout>(R.id.content_layout).addView(styledPlayerView)
         styledPlayerView.player = getPlayer()
@@ -83,10 +87,22 @@ class VideoActivity: BaseActivity() {
                 super.onPlaybackStateChanged(eventTime, state)
                 if (lastPlayState != 0) {
                     val costTime = SystemClock.elapsedRealtime() - timeStamp
-                    Log.d("VideoActivity", "last player state is $lastPlayState cost time $costTime current state is $state")
+                    Log.d(TAG, "last player state is $lastPlayState cost time $costTime current state is $state")
                 }
                 timeStamp = SystemClock.elapsedRealtime()
                 lastPlayState = state
+            }
+
+            override fun onRenderedFirstFrame(
+                eventTime: AnalyticsListener.EventTime,
+                output: Any,
+                renderTimeMs: Long
+            ) {
+                super.onRenderedFirstFrame(eventTime, output, renderTimeMs)
+                if (isFirstFrameRender) {
+                    isFirstFrameRender = false
+                    Log.d(TAG, "the first render frame is ${renderTimeMs - firstRenderFrameTimeStamp}")
+                }
             }
         })
     }

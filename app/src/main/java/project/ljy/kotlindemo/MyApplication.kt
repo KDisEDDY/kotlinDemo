@@ -2,20 +2,17 @@ package project.ljy.kotlindemo
 
 import android.app.Application
 import android.content.Context
-import android.os.Looper
-import android.util.Printer
 import androidx.multidex.MultiDex
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
+import project.ljy.kotlindemo.component.ApplicationComponent
 import project.ljy.kotlindemo.component.DaggerApplicationComponent
 import project.ljy.kotlindemo.network.ClientManager
 
 class MyApplication: Application() {
     //it is used the 'rebuild' to create the DaggerApplicationComponent
-    val appComponent = DaggerApplicationComponent.create()
+    val appComponent: ApplicationComponent = DaggerApplicationComponent.create()
 
 
     override fun attachBaseContext(base: Context?) {
