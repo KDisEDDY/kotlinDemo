@@ -16,6 +16,8 @@ import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
 import project.ljy.kotlindemo.adapter.VideoListAdapter
 import project.ljy.kotlindemo.dataSource.VideoListDataSource
+import project.ljy.kotlindemo.flutter.methodChannel.ChannelConst.PATH_VIDEO_FLUTTER
+import project.ljy.kotlindemo.flutter.methodChannel.MethodChannelPlugin
 import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
 import retrofit2.Call
 import retrofit2.Callback
@@ -84,11 +86,14 @@ class VideoListFragment : Fragment() {
     }
 
     private fun gotoFlutterVideoActivity(playUrl: String) {
+        // 注册通道用于和flutter交互
+        MethodChannelPlugin.registerPlugin()
+
         startActivity(
             FlutterActivity.withNewEngine()
+                .initialRoute(PATH_VIDEO_FLUTTER)
                 .build(requireActivity())
         )
-//        startActivity(FlutterActivity.createDefaultIntent(requireActivity()))
     }
 
     private fun gotoPhotoDialog(position: Int) {

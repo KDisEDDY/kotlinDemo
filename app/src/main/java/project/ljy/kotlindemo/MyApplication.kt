@@ -8,12 +8,12 @@ import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFact
 import okhttp3.OkHttpClient
 import project.ljy.kotlindemo.component.ApplicationComponent
 import project.ljy.kotlindemo.component.DaggerApplicationComponent
+import project.ljy.kotlindemo.flutter.methodChannel.FlutterEngineManager
 import project.ljy.kotlindemo.network.ClientManager
 
 class MyApplication: Application() {
     //it is used the 'rebuild' to create the DaggerApplicationComponent
     val appComponent: ApplicationComponent = DaggerApplicationComponent.create()
-
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
@@ -23,6 +23,7 @@ class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         initFresco(context = this, ClientManager.instance)
+        initFlutterEngine()
     }
 
     private fun initFresco(context: Context, client: OkHttpClient) {
@@ -30,5 +31,12 @@ class MyApplication: Application() {
             .newBuilder(context, client)
             .build()
         Fresco.initialize(context, pipelineConfig)
+    }
+
+    /**
+     * init the flutter engine
+     */
+    private fun initFlutterEngine() {
+        FlutterEngineManager.preload(this)
     }
 }
