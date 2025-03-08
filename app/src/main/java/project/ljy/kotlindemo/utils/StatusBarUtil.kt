@@ -1,5 +1,6 @@
 package project.ljy.kotlindemo.utils
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
@@ -35,6 +36,7 @@ object StatusBarUtil {
      * @param statusBarAlpha 状态栏透明度
      */
 
+    @SuppressLint("ObsoleteSdkInt")
     @JvmOverloads
     fun setColor(activity: Activity, @ColorInt color: Int,  statusBarAlpha: Int = DEFAULT_STATUS_BAR_ALPHA) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
