@@ -1,13 +1,13 @@
 package project.ljy.kotlindemo.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.data.VideoList
 import project.ljy.kotlindemo.adapter.VideoListAdapter
@@ -26,7 +26,7 @@ import retrofit2.Response
  */
 class VideoListFragment : Fragment() {
 
-    var mRecyclerList : RecyclerView? = null
+    private var mRecyclerList : RecyclerView? = null
     var mListAdapter: VideoListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

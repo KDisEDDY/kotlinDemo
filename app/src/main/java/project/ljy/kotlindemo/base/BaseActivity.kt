@@ -1,9 +1,10 @@
 package project.ljy.kotlindemo.base
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.utils.StatusBarUtil
 
@@ -14,7 +15,7 @@ import project.ljy.kotlindemo.utils.StatusBarUtil
  * Date: 2018/4/27
  * Version: 1.0
  */
-abstract class BaseActivity :AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var mToolbar: Toolbar
 
@@ -28,10 +29,8 @@ abstract class BaseActivity :AppCompatActivity() {
             setContentView(setSubContentView())
         }
         mToolbar = findViewById(R.id.toolbar)
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar)
-            supportActionBar?.setDisplayShowTitleEnabled(false)
-        }
+        setSupportActionBar(mToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         initOnCreateOperation(savedInstanceState)
     }
 
@@ -47,10 +46,10 @@ abstract class BaseActivity :AppCompatActivity() {
         } else if (toolbarStyle == BaseConstant.STYLE_RETURN_BACK) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        StatusBarUtil.setColor(this, resources.getColor(R.color.colorPrimary))
+        StatusBarUtil.setColor(this, ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
     }
 
-    fun setWindowTitle(title: String) {
+    private fun setWindowTitle(title: String) {
         val titleTxt = findViewById<TextView>(R.id.tv_title)
         titleTxt.text = title
     }

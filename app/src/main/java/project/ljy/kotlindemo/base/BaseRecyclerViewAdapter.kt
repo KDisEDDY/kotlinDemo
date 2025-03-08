@@ -2,8 +2,8 @@ package project.ljy.kotlindemo.base
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
 
 /**

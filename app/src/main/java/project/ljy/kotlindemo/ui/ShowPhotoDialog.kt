@@ -3,11 +3,11 @@ package project.ljy.kotlindemo.ui
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.adapter.PhotoCheckAdapter
 
