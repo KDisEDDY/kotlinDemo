@@ -24,9 +24,9 @@ import project.ljy.kotlindemo.R
 object StatusBarUtil {
 
     private const val DEFAULT_STATUS_BAR_ALPHA = 112
-    private const val FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view
-    private const val FAKE_TRANSLUCENT_VIEW_ID = R.id.statusbarutil_translucent_view
-    private const val TAG_KEY_HAVE_SET_OFFSET = -123
+    private var FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view
+    private var FAKE_TRANSLUCENT_VIEW_ID = R.id.statusbarutil_translucent_view
+    private var TAG_KEY_HAVE_SET_OFFSET = -123
 
     /**
      * 设置状态栏颜色
