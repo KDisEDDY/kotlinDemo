@@ -17,16 +17,14 @@ import project.ljy.kotlindemo.base.BaseRecyclerViewAdapter
  */
 class PhotoCheckAdapter(context:Context , mDataList : MutableList<String>) : BaseRecyclerViewAdapter<PhotoCheckAdapter.ViewHolder , String>(context, mDataList) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.item_photo_check, parent, false)
-        return if (view != null) {
-            ViewHolder(view)
-        } else null
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
-        val item  = mList!![position]
+        val item  = mList[position]
         if(item.isNotEmpty()){
             holder.mCurPhoto.setImageURI(item)
         }

@@ -1,5 +1,6 @@
 package project.ljy.kotlindemo.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
  */
 abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: Context, list: MutableList<S>) : RecyclerView.Adapter<T>() {
 
-    var mList: MutableList<S>? = null
+    var mList = mutableListOf<S>()
     var mContext: Context? = null
 
     private var onItemClickListener: RecycleViewItemClickListener.ItemClickListener? = null
@@ -26,7 +27,7 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
         this.mList = list
     }
 
-    abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): T?
+    abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): T
 
     /**
      * 需要使用点击事件时，重写onBindViewHolder时要调用父类方法，封装了监听在该方法
@@ -48,7 +49,7 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
     }
 
     override fun getItemCount(): Int {
-        return mList!!.size
+        return mList.size
     }
 
     fun setOnItemClickListener(onItemClickListener: RecycleViewItemClickListener.ItemClickListener) {
@@ -60,7 +61,7 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
     }
 
     fun getItem(position: Int): S? {
-        if (position < 0 && position > mList!!.size - 1) {
+        if (position < 0 || position > mList.size - 1) {
             try {
                 throw Exception("the positiion is wrong")
             } catch (e: Exception) {
@@ -68,21 +69,16 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
             }
 
         } else {
-            return mList!![position]
+            return mList[position]
         }
         return null
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addList(newList: List<S>) {
         if (newList.isNotEmpty()) {
-            mList!!.addAll(newList)
-        }
-    }
-
-    fun requestList(firstList: List<S>) {
-        if (firstList.isNotEmpty()) {
-            mList!!.clear()
-            mList!!.addAll(firstList)
+            mList.addAll(newList)
+            notifyDataSetChanged()
         }
     }
 }

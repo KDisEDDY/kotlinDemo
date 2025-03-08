@@ -19,16 +19,14 @@ import project.ljy.kotlindemo.data.VideoList
  */
 class VideoListAdapter(mContext: Context, mItemList: MutableList<VideoList.ItemList>) : BaseRecyclerViewAdapter<VideoListAdapter.ViewHolder, VideoList.ItemList>(mContext,mItemList) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.item_videolist, parent, false)
-        return if (view != null) {
-            ViewHolder(view)
-        } else null
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
-        val item  = mList!![position]
+        val item  = mList[position]
         holder.mTitleTxt.text = item.data?.title
         if(!item.data?.title.isNullOrEmpty() && !item.data?.cover?.feed.isNullOrEmpty()){
             holder.mPrePhotoImg.setImageURI(item.data!!.cover!!.feed)
@@ -41,9 +39,5 @@ class VideoListAdapter(mContext: Context, mItemList: MutableList<VideoList.ItemL
         var mTitleTxt: TextView = itemView.findViewById<View>(R.id.tv_title) as TextView
         var mPrePhotoImg: SimpleDraweeView = itemView.findViewById<View>(R.id.iv_preview_photo) as SimpleDraweeView
 
-    }
-
-    companion object {
-        private val TAG = "Logcat_info"
     }
 }

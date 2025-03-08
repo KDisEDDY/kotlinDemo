@@ -26,19 +26,27 @@ import retrofit2.Response
  */
 class VideoListFragment : Fragment() {
 
-    lateinit var mRecyclerList : RecyclerView
-    lateinit var mListAdapter: VideoListAdapter
+    var mRecyclerList : RecyclerView? = null
+    var mListAdapter: VideoListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mListAdapter = VideoListAdapter(context, mutableListOf())
+        context?.let {
+            mListAdapter = VideoListAdapter(it, mutableListOf())
+        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = LayoutInflater.from(activity).inflate(R.layout.fragment_video_list, container , false)
         mRecyclerList = view.findViewById(R.id.v_recycler)
-        mRecyclerList.layoutManager = LinearLayoutManager(activity)
-        mRecyclerList.adapter = mListAdapter
+        mRecyclerList?.let {
+            it.layoutManager = LinearLayoutManager(activity)
+            it.adapter = mListAdapter
+        }
         return view
     }
 
@@ -46,30 +54,32 @@ class VideoListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         getVideoList()
 
-        mListAdapter.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
+        mListAdapter?.setOnItemClickListener(object: RecycleViewItemClickListener.ItemClickListener{
             override fun onItemClick(v: View, position: Int) {
-                val itemPhoto  = mListAdapter.getItem(position)!!.data!!.cover
-                val dialog : ShowPhotoDialog = ShowPhotoDialog(context).apply {
-                    mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
-                }.build()
-                dialog.show()
+                val itemPhoto  = mListAdapter?.getItem(position)?.data?.cover
+                activity?.let {
+                    val dialog : ShowPhotoDialog = ShowPhotoDialog(it).apply {
+                        mPhotoList = mutableListOf(itemPhoto!!.feed!!,itemPhoto.detail!!,itemPhoto.blurred!!)
+                    }.build()
+                    dialog.show()
+                }
+
             }
         })
     }
 
     private fun getVideoList(){
         RetrofitManager.mService.getDailyVideoList().enqueue(object: Callback<VideoList> {
-            override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
+            override fun onFailure(call: Call<VideoList>, t: Throwable) {
                 Log.i("NetWorkResponse" ,t.toString())
             }
 
-            override fun onResponse(call: Call<VideoList>?, response: Response<VideoList>) {
+            override fun onResponse(call: Call<VideoList>, response: Response<VideoList>) {
                 val videoList = response.body()
                 //过滤掉没有数据的item
                 val filterList = videoList?.itemList!!.filter { item: VideoList.ItemList
                     -> item.data?.dataType.equals("VideoBeanForClient") }
-                mListAdapter.addList(filterList)
-                mListAdapter.notifyDataSetChanged()
+                mListAdapter?.addList(filterList)
             }
         })
     }
