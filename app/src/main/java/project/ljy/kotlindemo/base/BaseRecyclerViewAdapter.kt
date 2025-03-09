@@ -8,8 +8,6 @@ import project.ljy.kotlindemo.listener.RecycleViewItemClickListener
 /**
  * Title: BaseRecyclerViewAdapter
  * Description:
- * Copyright: Copyright (c) 2014-2016 gjfax.com
- * Company: 广金所
  * Author: 刘加彦
  * Date: 2018/4/26
  * Version: 1.0
@@ -36,12 +34,12 @@ abstract class BaseRecyclerViewAdapter<T : RecyclerView.ViewHolder, S>(context: 
     override fun onBindViewHolder(holder: T, position: Int) {
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener { v ->
-                onItemClickListener!!.onItemClick(v, holder.adapterPosition)
+                onItemClickListener!!.onItemClick(v, holder.bindingAdapterPosition)
             }
         }
         if (onLongItemClickListener != null) {
             holder.itemView.setOnLongClickListener { v ->
-                onLongItemClickListener!!.onLongItemClick(v, holder.adapterPosition)
+                onLongItemClickListener!!.onLongItemClick(v, holder.bindingAdapterPosition)
                 false
             }
         }

@@ -1,5 +1,6 @@
 package project.ljy.kotlindemo.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -24,8 +25,6 @@ import javax.inject.Inject
 /**
  * Title: VideoListFragment
  * Description:
- * Copyright: Copyright (c) 2014-2016 gjfax.com
- * Company: 广金所
  * Author: 刘加彦
  * Date: 2018/4/26
  * Version: 1.0
@@ -89,11 +88,12 @@ class VideoListFragment : Fragment() {
 
     private fun getVideoList(){
         mDataSource.getVideoList(object: Callback<VideoList> {
-            override fun onFailure(call: Call<VideoList>?, t: Throwable?) {
-                Log.i(TAG, "get VideoList fail ${t?.message}")
+            override fun onFailure(call: Call<VideoList>, t: Throwable) {
+                Log.i(TAG, "get VideoList fail ${t.message}")
             }
 
-            override fun onResponse(call: Call<VideoList>?, response: Response<VideoList>) {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onResponse(call: Call<VideoList>, response: Response<VideoList>) {
                 val videoList = response.body()
                 //过滤掉没有数据的item
                 val filterList = videoList?.itemList!!.filter { item: VideoList.ItemList

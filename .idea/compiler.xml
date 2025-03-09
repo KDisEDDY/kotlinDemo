@@ -2,12 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="kotlinDemo.app" target="11" />
-      <module name="kotlinDemo.baseutil" target="11" />
-      <module name="kotlinDemo.easyrouter" target="11" />
-      <module name="kotlinDemo.modulea" target="11" />
-      <module name="kotlinDemo.moduleb" target="11" />
-      <module name="kotlinDemo.videoedit" target="11" />
+      <module name="kotlinDemo.app" target="17" />
+      <module name="kotlinDemo.baseutil" target="17" />
+      <module name="kotlinDemo.easyrouter" target="17" />
+      <module name="kotlinDemo.modulea" target="17" />
+      <module name="kotlinDemo.moduleb" target="17" />
+      <module name="kotlinDemo.videoedit" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

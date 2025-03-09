@@ -1,16 +1,17 @@
 package project.ljy.kotlindemo.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
+import androidx.annotation.OptIn
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.eddyjyliu.baseutil.utils.ViewUtil
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.analytics.AnalyticsListener
-
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import project.ljy.kotlindemo.R
 import project.ljy.kotlindemo.base.BaseActivity
@@ -27,6 +28,7 @@ class VideoActivity: BaseActivity() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private var exoPlayer: ExoPlayer? = null
 
     var originVideoUrl = ""
@@ -76,8 +78,10 @@ class VideoActivity: BaseActivity() {
         this.findViewById<ConstraintLayout>(R.id.content_layout).addView(styledPlayerView)
         styledPlayerView.player = getPlayer()
         exoPlayer?.addAnalyticsListener(object : AnalyticsListener {
-            override fun onPlaybackStateChanged(
+
+            override fun onPlayWhenReadyChanged(
                 eventTime: AnalyticsListener.EventTime,
+                playWhenReady: Boolean,
                 state: Int
             ) {
                 super.onPlaybackStateChanged(eventTime, state)
