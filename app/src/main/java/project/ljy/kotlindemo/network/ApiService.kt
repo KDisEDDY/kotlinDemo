@@ -11,9 +11,6 @@ import retrofit2.http.Streaming
 /**
  * Title: ApiService
  * Description:
- * Copyright: Copyright (c) 2014-2016 gjfax.com
- * Company: 广金所
- * Author: 刘加彦
  * Date: 2018/4/26
  * Version: 1.0
  */

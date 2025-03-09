@@ -24,7 +24,7 @@ class PhotoCheckAdapter(context:Context , mDataList : MutableList<String>) : Bas
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
-        val item  = mList!![position]
+        val item  = mList[position]
         if(item.isNotEmpty()){
             holder.mCurPhoto.setImageURI(item)
         }

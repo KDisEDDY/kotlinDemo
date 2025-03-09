@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from :  "config.gradle"
 buildscript {
+    ext.kotlin_version = "1.7.22"
     ext.kotlin_version = '1.7.20'
     ext.deps = [
             'arouter' : [
@@ -18,10 +19,9 @@ buildscript {
     repositories {
         mavenCentral()
         google()
-        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.7.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath deps.arouter.register
 
@@ -34,7 +34,6 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        jcenter()
     }
 }
 
