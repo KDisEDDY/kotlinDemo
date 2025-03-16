@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class PhotoCheckRecyclerView: RecyclerView {
 
+    //图片列表页
+    var mPhotoList: MutableList<String> = mutableListOf()
+//    private lateinit var mGestureDetector : GestureDetector
+
     //主构造函数的实现块区域
     constructor(context: Context , attrs: AttributeSet? ,defStyle: Int) : super(context, attrs, defStyle)
 

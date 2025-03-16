@@ -1,58 +1,40 @@
 package project.ljy.kotlindemo.network
 
+import android.util.Log
+import dagger.Module
+import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import project.ljy.kotlindemo.utils.SystemUtil
+import okio.Buffer
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.nio.charset.Charset
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 /**
- * Title: RetrofitManager
+ * Title: RetrofitManagerØ
  * Description:
  * Author: 刘加彦
  * Date: 2018/4/26
  * Version: 1.0
  */
-object RetrofitManager{
+@Module
+class RetrofitManager{
 
-    private var mClient: OkHttpClient? = null
-    private var mRetrofit: Retrofit? = null
+    var mRetrofit: Retrofit? = null
 
-    val mService: ApiService by lazy { getRetrofit()!!.create(ApiService::class.java)}
-
-    /**
-     * 设置公共参数
-     */
-    private fun addQueryParameterInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val originalRequest = chain.request()
-            val request: Request
-            val modifiedUrl = originalRequest.url().newBuilder()
-                    // Provide your custom parameter here
-                    .addQueryParameter("phoneSystem", SystemUtil.systemVersion)
-                    .addQueryParameter("phoneModel", SystemUtil.systemModel)
-                    .build()
-            request = originalRequest.newBuilder().url(modifiedUrl).build()
-            chain.proceed(request)
-        }
+    @Singleton
+    @Provides
+    public fun getService() : ApiService {
+        return getRetrofit()!!.create(ApiService::class.java)
     }
 
-    /**
-     * 设置头
-     */
-    private fun addHeaderInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val originalRequest = chain.request()
-            val requestBuilder = originalRequest.newBuilder()
-                    // Provide your custom header here
-                    .method(originalRequest.method(), originalRequest.body())
-            val request = requestBuilder.build()
-            chain.proceed(request)
-        }
-    }
 
     private fun getRetrofit(): Retrofit? {
         if (mRetrofit == null) {
@@ -61,22 +43,15 @@ object RetrofitManager{
                     //添加一个log拦截器,打印所有的log
                     val httpLoggingInterceptor = HttpLoggingInterceptor()
                     //可以设置请求过滤的水平,body,basic,headers
-                    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-                    mClient = OkHttpClient.Builder()
-                            .addInterceptor(addQueryParameterInterceptor())  //参数添加
-                            .addInterceptor(addHeaderInterceptor()) // token过滤
-                            .addInterceptor(httpLoggingInterceptor) //日志,所有的请求响应度看到
-                            .connectTimeout(60L, TimeUnit.SECONDS)
-                            .readTimeout(60L, TimeUnit.SECONDS)
-                            .writeTimeout(60L, TimeUnit.SECONDS)
-                            .build()
+                    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
 
                     // 获取retrofit的实例
                     mRetrofit = Retrofit.Builder()
                             .baseUrl(UrlConstant.BASE_URL)  //自己配置
-                            .client(mClient!!)
+                            .client(ClientManager.instance)
+                            .callbackExecutor(Executors.newSingleThreadExecutor())
                             .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                             .build()
                 }
             }
@@ -84,5 +59,27 @@ object RetrofitManager{
         return mRetrofit
     }
 
+    class ChunksInterceptor: Interceptor {
 
+        val Utf8Charset = Charset.forName ("UTF-8")
+
+        override fun intercept (chain: Interceptor.Chain): Response {
+            val originalResponse = chain.proceed (chain.request ())
+            val responseBody = originalResponse.body
+            val source = responseBody!!.source ()
+
+            val buffer = Buffer () // We create our own Buffer
+
+            // Returns true if there are no more bytes in this source
+            while (!source.exhausted ()) {
+                val readBytes = source.read (buffer, Long.MAX_VALUE) // We read the whole buffer
+                val data = buffer.readString (Utf8Charset)
+
+                Log.d ("ChunksInterceptor","Read: $readBytes bytes")
+                Log.d ("ChunksInterceptor", "Content: \n $data \n")
+            }
+
+            return originalResponse
+        }
+    }
 }

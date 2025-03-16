@@ -1,0 +1,29 @@
+ext {
+    transModuleAComponent = false
+    transModuleBComponent = true
+
+    compile_sdk_version = 34
+    min_sdk_version = 21
+    target_sdk_version = 34
+    kotlin_version = "1.7.22"
+            arouter = [
+                    'api'     : "com.alibaba:arouter-api:1.5.2",
+                    'compiler': "com.alibaba:arouter-compiler:1.5.2",
+                    'register': "com.alibaba:arouter-register:1.0.2"
+            ]
+            dagger    = [
+                    'api'     : "com.google.dagger:dagger:2.55",
+                    'compiler': "com.google.dagger:dagger-compiler:2.55"
+            ]
+            androidX =  [
+                    'appcompat'       : "androidx.appcompat:appcompat:1.7.0",
+                    'core'            : "androidx.core:core-ktx:1.7.0",
+                    'constraintlayout': "androidx.constraintlayout:constraintlayout:2.2.1",
+                    'multidex'        : "androidx.multidex:multidex:2.0.1",
+
+            ]
+            androidTest = [
+                    'junit'   : "androidx.test.ext:junit:1.2.1",
+                    'espresso': "androidx.test.espresso:espresso-core:3.6.1"
+            ]
+}

@@ -1,12 +1,11 @@
 package project.ljy.kotlindemo.base
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.res.ResourcesCompat
+import android.widget.TextView
+import com.eddyjyliu.baseutil.utils.StatusBarUtil
 import project.ljy.kotlindemo.R
-import project.ljy.kotlindemo.utils.StatusBarUtil
 
 /**
  * Title: BaseActivity
@@ -15,9 +14,9 @@ import project.ljy.kotlindemo.utils.StatusBarUtil
  * Date: 2018/4/27
  * Version: 1.0
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity :AppCompatActivity() {
 
-    private lateinit var mToolbar: Toolbar
+    private var mToolbar: Toolbar? = null
 
     abstract fun setSubContentView(): Int
 
@@ -29,8 +28,10 @@ abstract class BaseActivity : AppCompatActivity() {
             setContentView(setSubContentView())
         }
         mToolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(mToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+        }
         initOnCreateOperation(savedInstanceState)
     }
 
@@ -46,10 +47,10 @@ abstract class BaseActivity : AppCompatActivity() {
         } else if (toolbarStyle == BaseConstant.STYLE_RETURN_BACK) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        StatusBarUtil.setColor(this, ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+        StatusBarUtil.setColor(this, resources.getColor(R.color.colorPrimary))
     }
 
-    private fun setWindowTitle(title: String) {
+    fun setWindowTitle(title: String) {
         val titleTxt = findViewById<TextView>(R.id.tv_title)
         titleTxt.text = title
     }
