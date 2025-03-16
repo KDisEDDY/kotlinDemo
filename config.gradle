@@ -12,8 +12,8 @@ ext {
                     'register': "com.alibaba:arouter-register:1.0.2"
             ]
             dagger    = [
-                    'api'     : "com.google.dagger:dagger:2.45",
-                    'compiler': "com.google.dagger:dagger-compiler:2.45"
+                    'api'     : "com.google.dagger:dagger:2.55",
+                    'compiler': "com.google.dagger:dagger-compiler:2.55"
             ]
             androidX =  [
                     'appcompat'       : "androidx.appcompat:appcompat:1.7.0",
